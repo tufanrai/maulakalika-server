@@ -62,9 +62,10 @@ export const uploadFile = asyncHandler(async (req: Request, res: Response) => {
 
   var result = await cloudinary.uploader.upload(file.path, {
     folder: "moulakalika/file", // optional
-    resource_type: "auto",
+    resource_type: "raw",
   });
 
+  console.log(result);
   // Save to MongoDB
   const uploadData = await Files.create({
     url: result.secure_url,
@@ -72,7 +73,6 @@ export const uploadFile = asyncHandler(async (req: Request, res: Response) => {
     title: fileDetails.title,
     description: fileDetails.description,
     user: req.user._id,
-    file_type: result.format,
   });
 
   // cleanup: remove local temp file
@@ -107,7 +107,7 @@ export const updateFile = asyncHandler(async (req: Request, res: Response) => {
   // Upload new file
   const result = await cloudinary.uploader.upload(newFile.path, {
     folder: "maulakalika/file",
-    resource_type: "auto",
+    resource_type: "raw",
   });
 
   // Update database record
