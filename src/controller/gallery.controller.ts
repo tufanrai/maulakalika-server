@@ -61,7 +61,6 @@ export const uploadImage = asyncHandler(async (req: Request, res: Response) => {
     resource_type: "image",
   });
 
-  console.log(result);
   // Save to MongoDB
   const uploadData = await Gallery.create({
     url: result.secure_url,
