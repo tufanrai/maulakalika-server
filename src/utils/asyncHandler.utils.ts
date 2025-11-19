@@ -7,8 +7,10 @@ type TAsyncHandler = (
 ) => Promise<any>;
 
 // custom async handler
-const asyncHandler = async (fun: TAsyncHandler) => {
+const asyncHandler = (fun: TAsyncHandler) => {
   return (req: Request, res: Response, next: NextFunction) => {
     Promise.resolve(fun(req, res, next)).catch((err) => next(err));
   };
 };
+
+export default asyncHandler;

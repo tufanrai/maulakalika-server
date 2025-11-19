@@ -10,6 +10,10 @@ const gallerySchema = new Schema(
       type: String,
       required: true,
     },
+    file_type: {
+      type: String,
+      required: true,
+    },
     user: {
       type: String,
       required: [true, "please pass the uploader's name"],

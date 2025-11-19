@@ -10,6 +10,10 @@ const fileSchema = new Schema(
       type: String,
       required: true,
     },
+    file_type: {
+      type: String,
+      required: true,
+    },
     title: {
       type: String,
       required: [true, "please enter the file's title"],

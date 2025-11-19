@@ -16,14 +16,14 @@ const authAdmin = (role: Roles[]) => {
       // checking the type of the token
       if (
         authorizationToken &&
-        !authorizationToken.startsWith("BEARER") &&
+        !authorizationToken.startsWith("Bearer") &&
         authorizationToken.split("").length! >= 2
       ) {
         throw new customError("access denied: false token", 406);
       }
 
       // spliting the actual token
-      const token = authorizationToken.split("")[1];
+      const token = authorizationToken.split(" ")[1];
 
       if (!token) {
         throw new customError("access denied: No token passed", 406);
@@ -42,7 +42,7 @@ const authAdmin = (role: Roles[]) => {
       // checking the token's expiry date
       if (
         verifiedToken.exp &&
-        verifiedToken.exp > Math.floor(Date.now() / 1000)
+        verifiedToken.exp < Math.floor(Date.now() / 1000)
       ) {
         throw new customError("access denied: Token expired please login", 406);
       }

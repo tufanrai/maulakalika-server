@@ -2,15 +2,14 @@
 import { Request, Response } from "express";
 import { cloudinary } from "../config/cloudinary.config";
 import fs from "fs";
-import Files from "../model/files.model";
+import Gallery from "../model/gallery.model";
 import asyncHandler from "../utils/asyncHandler.utils";
 import customError from "../utils/customerror.utils";
-import { IFiles } from "../interface/interfaces";
 
 // get all files
-export const getAllCollections = asyncHandler(
+export const getAllCollectionsImage = asyncHandler(
   async (req: Request, res: Response) => {
-    const files = await Files.find();
+    const files = await Gallery.find();
 
     if (!files) {
       throw new customError("No files available", 404);
@@ -26,10 +25,10 @@ export const getAllCollections = asyncHandler(
 );
 
 // get specific files
-export const getSpecificFile = asyncHandler(
+export const getSpecificImage = asyncHandler(
   async (req: Request, res: Response) => {
     const { id } = req.params;
-    const file = await Files.findById(id);
+    const file = await Gallery.findById(id);
 
     if (!file) {
       throw new customError("File not found", 404);
@@ -50,31 +49,25 @@ export const getSpecificFile = asyncHandler(
 );
 
 // upload file
-export const uploadFile = asyncHandler(async (req: Request, res: Response) => {
+export const uploadImage = asyncHandler(async (req: Request, res: Response) => {
   const file = req.file;
-  const fileDetails: IFiles = req.body;
 
   if (!file) {
     throw new customError("Please provide the file", 400);
   }
 
-  if (!fileDetails) {
-    throw new customError("please provide the required details", 400);
-  }
-
   var result = await cloudinary.uploader.upload(file.path, {
     folder: "moulakalika/gallery", // optional
-    resource_type: "auto",
+    resource_type: "image",
   });
 
   console.log(result);
   // Save to MongoDB
-  const uploadData = await Files.create({
+  const uploadData = await Gallery.create({
     url: result.secure_url,
     public_id: result.public_id,
-    title: fileDetails.title,
-    description: fileDetails.description,
     user: req.user._id,
+    file_type: result.format,
   });
 
   // cleanup: remove local temp file
@@ -89,11 +82,10 @@ export const uploadFile = asyncHandler(async (req: Request, res: Response) => {
 });
 
 // update the uploaded file
-export const updateFile = asyncHandler(async (req: Request, res: Response) => {
+export const updateImage = asyncHandler(async (req: Request, res: Response) => {
   const { id } = req.params; // MongoDB document ID
   const newFile = req.file;
-  const detials: IFiles = req.body;
-  const existing = await Files.findById(id);
+  const existing = await Gallery.findById(id);
 
   if (!existing) {
     throw new customError("File not found", 404);
@@ -109,13 +101,12 @@ export const updateFile = asyncHandler(async (req: Request, res: Response) => {
   // Upload new file
   const result = await cloudinary.uploader.upload(newFile.path, {
     folder: "maulakalika/gallery",
-    resource_type: "auto",
+    resource_type: "image",
   });
 
   // Update database record
   existing.url = result.secure_url;
   existing.public_id = result.public_id;
-  if (detials.title) existing.title = detials.title;
 
   await existing.save();
 
@@ -130,10 +121,10 @@ export const updateFile = asyncHandler(async (req: Request, res: Response) => {
 });
 
 // remove the uploaded file
-export const deleteFile = asyncHandler(async (req: Request, res: Response) => {
+export const deleteImage = asyncHandler(async (req: Request, res: Response) => {
   const { id } = req.params;
 
-  const existing = await Files.findById(id);
+  const existing = await Gallery.findById(id);
 
   if (!existing) {
     throw new customError("File not found", 404);
