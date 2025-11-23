@@ -56,19 +56,28 @@ export const uploadImage = asyncHandler(async (req: Request, res: Response) => {
     throw new customError("Please provide the file", 400);
   }
 
-  var result = await cloudinary.uploader.upload(file.path, {
+  const result = await cloudinary.uploader.upload(file.path, {
     folder: "moulakalika/gallery", // optional
     resource_type: "image",
   });
 
+  if (!result) {
+    throw new customError("Something went wrong please try again", 400);
+  }
+
   // Save to MongoDB
   const uploadData = await Gallery.create({
+    file_type: result.format,
     url: result.secure_url,
     public_id: result.public_id,
     user: req.user._id,
-    file_type: result.format,
   });
 
+  if (!uploadData) {
+    throw new customError("something went worng please try again later", 500);
+  }
+
+  console.log(uploadData);
   // cleanup: remove local temp file
   fs.unlinkSync(file.path);
 

@@ -4,15 +4,15 @@ const gallerySchema = new Schema(
   {
     url: {
       type: String,
-      required: true,
+      required: [true, "please pass the public url"],
     },
     public_id: {
       type: String,
-      required: true,
+      required: [true, "please pass the public id"],
     },
     file_type: {
       type: String,
-      required: true,
+      required: [true, "please pass the file type"],
     },
     user: {
       type: String,

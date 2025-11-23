@@ -27,6 +27,7 @@ export interface IRegisterValue {
   contact: number;
   password: string;
   role: Roles;
+  about: string;
 }
 
 // login admin
