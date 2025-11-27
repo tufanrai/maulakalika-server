@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import { ETypes } from "../interface/FileTypes.enum";
 
 const fileSchema = new Schema(
   {
@@ -17,6 +18,12 @@ const fileSchema = new Schema(
     description: {
       type: String,
       required: [true, "please describe a little about the file"],
+    },
+    type: {
+      type: String,
+      required: [true, "please specify the file type"],
+      default: ETypes.downloads,
+      enum: Object.values(ETypes),
     },
     user: {
       type: String,

@@ -11,7 +11,7 @@ const asyncHandler_utils_1 = __importDefault(require("../utils/asyncHandler.util
 const customerror_utils_1 = __importDefault(require("../utils/customerror.utils"));
 // get all files
 exports.getAllCollectionsImage = (0, asyncHandler_utils_1.default)(async (req, res) => {
-    const files = await gallery_model_1.default.find();
+    const files = (await gallery_model_1.default.find()).reverse();
     if (!files) {
         throw new customerror_utils_1.default("No files available", 404);
     }

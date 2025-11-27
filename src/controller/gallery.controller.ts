@@ -9,7 +9,7 @@ import customError from "../utils/customerror.utils";
 // get all files
 export const getAllCollectionsImage = asyncHandler(
   async (req: Request, res: Response) => {
-    const files = await Gallery.find();
+    const files = (await Gallery.find()).reverse();
 
     if (!files) {
       throw new customError("No files available", 404);

@@ -9,7 +9,7 @@ import { IFiles } from "../interface/interfaces";
 
 // get all files
 export const getAllFiles = asyncHandler(async (req: Request, res: Response) => {
-  const files = await Files.find();
+  const files = (await Files.find()).reverse();
 
   if (!files) {
     throw new customError("No files available", 404);
