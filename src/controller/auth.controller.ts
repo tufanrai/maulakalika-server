@@ -68,8 +68,6 @@ export const loginAdmin = asyncHandler(async (req: Request, res: Response) => {
     role: admin.role,
   });
 
-  console.log(token);
-
   res.status(200).json({
     message: "user successfully loged in",
     admin,

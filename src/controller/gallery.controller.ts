@@ -77,7 +77,6 @@ export const uploadImage = asyncHandler(async (req: Request, res: Response) => {
     throw new customError("something went worng please try again later", 500);
   }
 
-  console.log(uploadData);
   // cleanup: remove local temp file
   fs.unlinkSync(file.path);
 

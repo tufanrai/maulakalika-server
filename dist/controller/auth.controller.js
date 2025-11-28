@@ -52,7 +52,6 @@ exports.loginAdmin = (0, asyncHandler_utils_1.default)(async (req, res) => {
         password: admin.password,
         role: admin.role,
     });
-    console.log(token);
     res.status(200).json({
         message: "user successfully loged in",
         admin,

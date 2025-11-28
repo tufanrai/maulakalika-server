@@ -63,7 +63,6 @@ exports.uploadImage = (0, asyncHandler_utils_1.default)(async (req, res) => {
     if (!uploadData) {
         throw new customerror_utils_1.default("something went worng please try again later", 500);
     }
-    console.log(uploadData);
     // cleanup: remove local temp file
     fs_1.default.unlinkSync(file.path);
     res.status(200).json({

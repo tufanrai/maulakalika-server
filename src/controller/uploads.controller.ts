@@ -65,7 +65,6 @@ export const uploadFile = asyncHandler(async (req: Request, res: Response) => {
     resource_type: "raw",
   });
 
-  console.log(result);
   // Save to MongoDB
   const uploadData = await Files.create({
     url: result.secure_url,

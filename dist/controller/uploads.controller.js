@@ -54,7 +54,6 @@ exports.uploadFile = (0, asyncHandler_utils_1.default)(async (req, res) => {
         folder: "moulakalika/file", // optional
         resource_type: "raw",
     });
-    console.log(result);
     // Save to MongoDB
     const uploadData = await files_model_1.default.create({
         url: result.secure_url,
