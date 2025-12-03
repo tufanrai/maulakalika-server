@@ -15,7 +15,7 @@ const authAdmin = (role) => {
             }
             // checking the type of the token
             if (authorizationToken &&
-                !authorizationToken.startsWith("BEARER") &&
+                !authorizationToken.startsWith("Bearer") &&
                 authorizationToken.split("").length >= 2) {
                 throw new customerror_utils_1.default("access denied: false token", 406);
             }

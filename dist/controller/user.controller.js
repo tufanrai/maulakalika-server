@@ -3,10 +3,23 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.removeAdmin = exports.updateAdmin = exports.getUserData = void 0;
+exports.removeAdmin = exports.updateAdmin = exports.getUserData = exports.getAllUsersData = void 0;
 const customerror_utils_1 = __importDefault(require("../utils/customerror.utils"));
 const user_model_1 = __importDefault(require("../model/user.model"));
 const asyncHandler_utils_1 = __importDefault(require("../utils/asyncHandler.utils"));
+// get all users data
+exports.getAllUsersData = (0, asyncHandler_utils_1.default)(async (req, res) => {
+    const admins = await user_model_1.default.find({}, { password: 0 });
+    if (!admins) {
+        throw new customerror_utils_1.default("You do not have any admins on the list", 404);
+    }
+    res.status(200).json({
+        message: "user admins successfully fetched",
+        data: admins,
+        status: "success",
+        success: true,
+    });
+});
 // get users data
 exports.getUserData = (0, asyncHandler_utils_1.default)(async (req, res) => {
     const { id } = req.params;

@@ -4,6 +4,24 @@ import User from "../model/user.model";
 import asyncHandler from "../utils/asyncHandler.utils";
 import { IRegisterValue } from "../interface/interfaces";
 
+// get all users data
+export const getAllUsersData = asyncHandler(
+  async (req: Request, res: Response) => {
+    const admins = await User.find({}, { password: 0 });
+
+    if (!admins) {
+      throw new customError("You do not have any admins on the list", 404);
+    }
+
+    res.status(200).json({
+      message: "user admins successfully fetched",
+      data: admins,
+      status: "success",
+      success: true,
+    });
+  }
+);
+
 // get users data
 export const getUserData = asyncHandler(async (req: Request, res: Response) => {
   const { id } = req.params;
