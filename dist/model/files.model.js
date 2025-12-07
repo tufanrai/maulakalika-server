@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = require("mongoose");
 const FileTypes_enum_1 = require("../interface/FileTypes.enum");
-const fileSchema = new mongoose_1.Schema({
+const projectSchema = new mongoose_1.Schema({
     url: {
         type: String,
         required: true,
@@ -19,17 +19,32 @@ const fileSchema = new mongoose_1.Schema({
         type: String,
         required: [true, "please describe a little about the file"],
     },
-    type: {
+    status: {
         type: String,
-        required: [true, "please specify the file type"],
-        default: FileTypes_enum_1.ETypes.downloads,
-        enum: Object.values(FileTypes_enum_1.ETypes),
+        required: [true, "please specify the status of the project."],
+        default: FileTypes_enum_1.EStatus.planning,
+        enum: Object.values(FileTypes_enum_1.EStatus),
+    },
+    location: {
+        type: String,
+        required: [true, "please define the location of the project sight"],
+    },
+    startedYear: {
+        type: String,
+        required: [true, "please define the started year of the project"],
+    },
+    capacity: {
+        type: String,
+        required: [true, "please define the capacity of the project"],
+    },
+    features: {
+        type: [String],
     },
     user: {
         type: String,
         required: [true, "please pass the uploader's name"],
     },
 }, { timestamps: true });
-const Files = (0, mongoose_1.model)("files", fileSchema);
-exports.default = Files;
+const Project = (0, mongoose_1.model)("projects", projectSchema);
+exports.default = Project;
 //# sourceMappingURL=files.model.js.map

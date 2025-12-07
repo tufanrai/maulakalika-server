@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose";
-import { ETypes } from "../interface/FileTypes.enum";
+import { EStatus } from "../interface/FileTypes.enum";
 
-const fileSchema = new Schema(
+const projectSchema = new Schema(
   {
     url: {
       type: String,
@@ -19,11 +19,26 @@ const fileSchema = new Schema(
       type: String,
       required: [true, "please describe a little about the file"],
     },
-    type: {
+    status: {
       type: String,
-      required: [true, "please specify the file type"],
-      default: ETypes.downloads,
-      enum: Object.values(ETypes),
+      required: [true, "please specify the status of the project."],
+      default: EStatus.planning,
+      enum: Object.values(EStatus),
+    },
+    location: {
+      type: String,
+      required: [true, "please define the location of the project sight"],
+    },
+    startedYear: {
+      type: String,
+      required: [true, "please define the started year of the project"],
+    },
+    capacity: {
+      type: String,
+      required: [true, "please define the capacity of the project"],
+    },
+    features: {
+      type: [String],
     },
     user: {
       type: String,
@@ -33,5 +48,5 @@ const fileSchema = new Schema(
   { timestamps: true }
 );
 
-const Files = model("files", fileSchema);
-export default Files;
+const Project = model("projects", projectSchema);
+export default Project;

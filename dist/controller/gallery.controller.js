@@ -43,11 +43,15 @@ exports.getSpecificImage = (0, asyncHandler_utils_1.default)(async (req, res) =>
 // upload file
 exports.uploadImage = (0, asyncHandler_utils_1.default)(async (req, res) => {
     const file = req.file;
+    const files_detail = req.body;
     if (!file) {
         throw new customerror_utils_1.default("Please provide the file", 400);
     }
+    if (!files_detail) {
+        throw new customerror_utils_1.default("please provide the details of the image", 400);
+    }
     const result = await cloudinary_config_1.cloudinary.uploader.upload(file.path, {
-        folder: "moulakalika/gallery", // optional
+        folder: "moulakalika/gallery/images", // optional
         resource_type: "image",
     });
     if (!result) {
@@ -55,10 +59,11 @@ exports.uploadImage = (0, asyncHandler_utils_1.default)(async (req, res) => {
     }
     // Save to MongoDB
     const uploadData = await gallery_model_1.default.create({
-        file_type: result.format,
         url: result.secure_url,
         public_id: result.public_id,
         user: req.user._id,
+        alt: files_detail.alt,
+        category: files_detail.category,
     });
     if (!uploadData) {
         throw new customerror_utils_1.default("something went worng please try again later", 500);
@@ -76,6 +81,7 @@ exports.uploadImage = (0, asyncHandler_utils_1.default)(async (req, res) => {
 exports.updateImage = (0, asyncHandler_utils_1.default)(async (req, res) => {
     const { id } = req.params; // MongoDB document ID
     const newFile = req.file;
+    const files_detail = req.body;
     const existing = await gallery_model_1.default.findById(id);
     if (!existing) {
         throw new customerror_utils_1.default("File not found", 404);
@@ -87,17 +93,19 @@ exports.updateImage = (0, asyncHandler_utils_1.default)(async (req, res) => {
     await cloudinary_config_1.cloudinary.uploader.destroy(existing.public_id);
     // Upload new file
     const result = await cloudinary_config_1.cloudinary.uploader.upload(newFile.path, {
-        folder: "maulakalika/gallery",
+        folder: "maulakalika/gallery/images",
         resource_type: "image",
     });
     // Update database record
     existing.url = result.secure_url;
     existing.public_id = result.public_id;
-    await existing.save();
+    files_detail.alt ? (existing.alt = files_detail.alt) : "";
+    files_detail.category ? (existing.category = files_detail.category) : "";
+    const latest_modified = await existing.save({ validateModifiedOnly: true });
     fs_1.default.unlinkSync(newFile.path);
     res.status(200).json({
         message: "file successfully updated",
-        existing,
+        latest_modified,
         status: "Success",
         success: true,
     });

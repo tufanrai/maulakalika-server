@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { Roles } from "./Role.enum";
+import { EReports, EStatus } from "./FileTypes.enum";
 export interface IPayload {
     _id: mongoose.Types.ObjectId;
     name: string;
@@ -30,5 +31,27 @@ export interface ILogin {
 export interface IFiles {
     title: string;
     description: string;
+    capacity: string;
+    status: EStatus;
+    location: string;
+    startYear: string;
+    features: string[];
+}
+export interface INews {
+    title: string;
+    excerpt: string;
+    date: string;
+    category: string;
+    description: string;
+}
+export interface IReports {
+    title: string;
+    type: EReports;
+    date: string;
+    pages: string;
+}
+export interface IImage {
+    category: string;
+    alt: string;
 }
 //# sourceMappingURL=interfaces.d.ts.map

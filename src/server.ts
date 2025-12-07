@@ -7,6 +7,8 @@ import authRouter from "./routers/auth.router";
 import userRouter from "./routers/user.router";
 import uploadRouter from "./routers/upload.router";
 import galleryRouter from "./routers/gallery.router";
+import newsRouter from "./routers/news.router";
+import reportsRouter from "./routers/reports.router";
 // environment variables
 const PORT = process.env.PORT ?? "";
 const DB_URI = process.env.DB_URI ?? "";
@@ -26,6 +28,8 @@ app.use("/api/auth", authRouter);
 app.use("/user", userRouter);
 app.use("/files", uploadRouter);
 app.use("/gallery", galleryRouter);
+app.use("/news", newsRouter);
+app.use("/reports", reportsRouter);
 
 // custom error response
 app.use(errorMiddleware);

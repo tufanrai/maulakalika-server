@@ -7,7 +7,7 @@ import { IRegisterValue } from "../interface/interfaces";
 // get all users data
 export const getAllUsersData = asyncHandler(
   async (req: Request, res: Response) => {
-    const admins = await User.find({}, { password: 0 });
+    const admins = (await User.find({}, { password: 0 })).reverse();
 
     if (!admins) {
       throw new customError("You do not have any admins on the list", 404);

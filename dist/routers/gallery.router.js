@@ -11,8 +11,8 @@ const Role_enum_1 = require("../interface/Role.enum");
 const galleryRouter = (0, express_1.Router)();
 galleryRouter.get("/", gallery_controller_1.getAllCollectionsImage);
 galleryRouter.get("/:id", gallery_controller_1.getSpecificImage);
-galleryRouter.post("/upload", (0, authenticate_middleware_1.default)([Role_enum_1.Roles.admin]), upload_middleware_1.default.single("image"), gallery_controller_1.uploadImage);
-galleryRouter.put("/upload/:id", (0, authenticate_middleware_1.default)([Role_enum_1.Roles.admin]), upload_middleware_1.default.single("image"), gallery_controller_1.updateImage);
-galleryRouter.delete("/upload/:id", (0, authenticate_middleware_1.default)([Role_enum_1.Roles.admin]), gallery_controller_1.deleteImage);
+galleryRouter.post("/upload", (0, authenticate_middleware_1.default)([Role_enum_1.Roles.admin, Role_enum_1.Roles.superAdmin]), upload_middleware_1.default.single("image"), gallery_controller_1.uploadImage);
+galleryRouter.put("/upload/:id", (0, authenticate_middleware_1.default)([Role_enum_1.Roles.admin, Role_enum_1.Roles.superAdmin]), upload_middleware_1.default.single("image"), gallery_controller_1.updateImage);
+galleryRouter.delete("/upload/:id", (0, authenticate_middleware_1.default)([Role_enum_1.Roles.admin, Role_enum_1.Roles.superAdmin]), gallery_controller_1.deleteImage);
 exports.default = galleryRouter;
 //# sourceMappingURL=gallery.router.js.map

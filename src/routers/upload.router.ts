@@ -17,18 +17,22 @@ uploadRouter.get("/:id", getSpecificFile);
 
 uploadRouter.post(
   "/upload",
-  authAdmin([Roles.admin]),
+  authAdmin([Roles.admin, Roles.superAdmin]),
   upload.single("file"),
   uploadFile
 );
 
 uploadRouter.put(
   "/upload/:id",
-  authAdmin([Roles.admin]),
+  authAdmin([Roles.admin, Roles.superAdmin]),
   upload.single("file"),
   updateFile
 );
 
-uploadRouter.delete("/upload/:id", authAdmin([Roles.admin]), deleteFile);
+uploadRouter.delete(
+  "/upload/:id",
+  authAdmin([Roles.admin, Roles.superAdmin]),
+  deleteFile
+);
 
 export default uploadRouter;

@@ -17,18 +17,22 @@ galleryRouter.get("/:id", getSpecificImage);
 
 galleryRouter.post(
   "/upload",
-  authAdmin([Roles.admin]),
+  authAdmin([Roles.admin, Roles.superAdmin]),
   upload.single("image"),
   uploadImage
 );
 
 galleryRouter.put(
   "/upload/:id",
-  authAdmin([Roles.admin]),
+  authAdmin([Roles.admin, Roles.superAdmin]),
   upload.single("image"),
   updateImage
 );
 
-galleryRouter.delete("/upload/:id", authAdmin([Roles.admin]), deleteImage);
+galleryRouter.delete(
+  "/upload/:id",
+  authAdmin([Roles.admin, Roles.superAdmin]),
+  deleteImage
+);
 
 export default galleryRouter;

@@ -10,9 +10,13 @@ const gallerySchema = new mongoose_1.Schema({
         type: String,
         required: [true, "please pass the public id"],
     },
-    file_type: {
+    category: {
         type: String,
-        required: [true, "please pass the file type"],
+        required: [true, "please add define the category of the image"],
+    },
+    alt: {
+        type: String,
+        required: [true, "please provide the alt of the image"],
     },
     user: {
         type: String,

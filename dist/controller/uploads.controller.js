@@ -51,7 +51,7 @@ exports.uploadFile = (0, asyncHandler_utils_1.default)(async (req, res) => {
         throw new customerror_utils_1.default("please provide the required details", 400);
     }
     var result = await cloudinary_config_1.cloudinary.uploader.upload(file.path, {
-        folder: "moulakalika/file", // optional
+        folder: "moulakalika/file/projects", // optional
         resource_type: "raw",
     });
     // Save to MongoDB
@@ -60,6 +60,11 @@ exports.uploadFile = (0, asyncHandler_utils_1.default)(async (req, res) => {
         public_id: result.public_id,
         title: fileDetails.title,
         description: fileDetails.description,
+        capacity: fileDetails.capacity,
+        status: fileDetails.status,
+        location: fileDetails.location,
+        startedYear: fileDetails.startYear,
+        features: fileDetails.features,
         user: req.user._id,
     });
     // cleanup: remove local temp file
@@ -87,7 +92,7 @@ exports.updateFile = (0, asyncHandler_utils_1.default)(async (req, res) => {
     await cloudinary_config_1.cloudinary.uploader.destroy(existing.public_id);
     // Upload new file
     const result = await cloudinary_config_1.cloudinary.uploader.upload(newFile.path, {
-        folder: "maulakalika/file",
+        folder: "maulakalika/file/projects",
         resource_type: "raw",
     });
     // Update database record
@@ -95,11 +100,23 @@ exports.updateFile = (0, asyncHandler_utils_1.default)(async (req, res) => {
     existing.public_id = result.public_id;
     if (detials.title)
         existing.title = detials.title;
-    await existing.save();
+    if (detials.capacity)
+        existing.capacity = detials.capacity;
+    if (detials.description)
+        existing.description = detials.description;
+    if (detials.location)
+        existing.location = detials.location;
+    if (detials.status)
+        existing.status = detials.status;
+    if (detials.startYear)
+        existing.startedYear = detials.startYear;
+    if (detials.features)
+        existing.features = detials.features;
+    const latest_modified = await existing.save({ validateModifiedOnly: true });
     fs_1.default.unlinkSync(newFile.path);
     res.status(200).json({
         message: "file successfully updated",
-        existing,
+        latest_modified,
         status: "Success",
         success: true,
     });

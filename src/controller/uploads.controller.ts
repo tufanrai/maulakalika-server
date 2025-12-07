@@ -61,7 +61,7 @@ export const uploadFile = asyncHandler(async (req: Request, res: Response) => {
   }
 
   var result = await cloudinary.uploader.upload(file.path, {
-    folder: "moulakalika/file", // optional
+    folder: "moulakalika/file/projects", // optional
     resource_type: "raw",
   });
 
@@ -71,6 +71,11 @@ export const uploadFile = asyncHandler(async (req: Request, res: Response) => {
     public_id: result.public_id,
     title: fileDetails.title,
     description: fileDetails.description,
+    capacity: fileDetails.capacity,
+    status: fileDetails.status,
+    location: fileDetails.location,
+    startedYear: fileDetails.startYear,
+    features: fileDetails.features,
     user: req.user._id,
   });
 
@@ -105,7 +110,7 @@ export const updateFile = asyncHandler(async (req: Request, res: Response) => {
 
   // Upload new file
   const result = await cloudinary.uploader.upload(newFile.path, {
-    folder: "maulakalika/file",
+    folder: "maulakalika/file/projects",
     resource_type: "raw",
   });
 
@@ -113,14 +118,20 @@ export const updateFile = asyncHandler(async (req: Request, res: Response) => {
   existing.url = result.secure_url;
   existing.public_id = result.public_id;
   if (detials.title) existing.title = detials.title;
+  if (detials.capacity) existing.capacity = detials.capacity;
+  if (detials.description) existing.description = detials.description;
+  if (detials.location) existing.location = detials.location;
+  if (detials.status) existing.status = detials.status;
+  if (detials.startYear) existing.startedYear = detials.startYear;
+  if (detials.features) existing.features = detials.features;
 
-  await existing.save();
+  const latest_modified = await existing.save({ validateModifiedOnly: true });
 
   fs.unlinkSync(newFile.path);
 
   res.status(200).json({
     message: "file successfully updated",
-    existing,
+    latest_modified,
     status: "Success",
     success: true,
   });

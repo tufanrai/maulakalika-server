@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { Roles } from "./Role.enum";
+import { EReports, EStatus, ETypes } from "./FileTypes.enum";
 
 // Ipayload
 export interface IPayload {
@@ -36,8 +37,36 @@ export interface ILogin {
   password: string;
 }
 
-// file interface
+// project interface
 export interface IFiles {
   title: string;
   description: string;
+  capacity: string;
+  status: EStatus;
+  location: string;
+  startYear: string;
+  features: string[];
+}
+
+// news interface
+export interface INews {
+  title: string;
+  excerpt: string;
+  date: string;
+  category: string;
+  description: string;
+}
+
+// reports interface
+export interface IReports {
+  title: string;
+  type: EReports;
+  date: string;
+  pages: string;
+}
+
+// Image interface
+export interface IImage {
+  category: string;
+  alt: string;
 }

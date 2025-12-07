@@ -9,7 +9,7 @@ const user_model_1 = __importDefault(require("../model/user.model"));
 const asyncHandler_utils_1 = __importDefault(require("../utils/asyncHandler.utils"));
 // get all users data
 exports.getAllUsersData = (0, asyncHandler_utils_1.default)(async (req, res) => {
-    const admins = await user_model_1.default.find({}, { password: 0 });
+    const admins = (await user_model_1.default.find({}, { password: 0 })).reverse();
     if (!admins) {
         throw new customerror_utils_1.default("You do not have any admins on the list", 404);
     }

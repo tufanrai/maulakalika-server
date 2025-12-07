@@ -5,6 +5,7 @@ import fs from "fs";
 import Gallery from "../model/gallery.model";
 import asyncHandler from "../utils/asyncHandler.utils";
 import customError from "../utils/customerror.utils";
+import { IImage } from "../interface/interfaces";
 
 // get all files
 export const getAllCollectionsImage = asyncHandler(
@@ -51,13 +52,18 @@ export const getSpecificImage = asyncHandler(
 // upload file
 export const uploadImage = asyncHandler(async (req: Request, res: Response) => {
   const file = req.file;
+  const files_detail: IImage = req.body;
 
   if (!file) {
     throw new customError("Please provide the file", 400);
   }
 
+  if (!files_detail) {
+    throw new customError("please provide the details of the image", 400);
+  }
+
   const result = await cloudinary.uploader.upload(file.path, {
-    folder: "moulakalika/gallery", // optional
+    folder: "moulakalika/gallery/images", // optional
     resource_type: "image",
   });
 
@@ -67,10 +73,11 @@ export const uploadImage = asyncHandler(async (req: Request, res: Response) => {
 
   // Save to MongoDB
   const uploadData = await Gallery.create({
-    file_type: result.format,
     url: result.secure_url,
     public_id: result.public_id,
     user: req.user._id,
+    alt: files_detail.alt,
+    category: files_detail.category,
   });
 
   if (!uploadData) {
@@ -92,6 +99,7 @@ export const uploadImage = asyncHandler(async (req: Request, res: Response) => {
 export const updateImage = asyncHandler(async (req: Request, res: Response) => {
   const { id } = req.params; // MongoDB document ID
   const newFile = req.file;
+  const files_detail: IImage = req.body;
   const existing = await Gallery.findById(id);
 
   if (!existing) {
@@ -107,21 +115,23 @@ export const updateImage = asyncHandler(async (req: Request, res: Response) => {
 
   // Upload new file
   const result = await cloudinary.uploader.upload(newFile.path, {
-    folder: "maulakalika/gallery",
+    folder: "maulakalika/gallery/images",
     resource_type: "image",
   });
 
   // Update database record
   existing.url = result.secure_url;
   existing.public_id = result.public_id;
+  files_detail.alt ? (existing.alt = files_detail.alt) : "";
+  files_detail.category ? (existing.category = files_detail.category) : "";
 
-  await existing.save();
+  const latest_modified = await existing.save({ validateModifiedOnly: true });
 
   fs.unlinkSync(newFile.path);
 
   res.status(200).json({
     message: "file successfully updated",
-    existing,
+    latest_modified,
     status: "Success",
     success: true,
   });
