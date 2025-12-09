@@ -6,22 +6,82 @@ declare const Project: import("mongoose").Model<{
     url: string;
     public_id: string;
     title: string;
+    fullDescription: string;
     status: EStatus;
     location: string;
-    startedYear: string;
+    startYear: string;
     capacity: string;
     features: string[];
+    technicalSpecs: import("mongoose").Types.DocumentArray<{
+        Type: string;
+        headHeight: string;
+        turbineType: string;
+        annualGeneration: string;
+        gridConnection?: string | null;
+    }, import("mongoose").Types.Subdocument<import("bson").ObjectId, any, {
+        Type: string;
+        headHeight: string;
+        turbineType: string;
+        annualGeneration: string;
+        gridConnection?: string | null;
+    }> & {
+        Type: string;
+        headHeight: string;
+        turbineType: string;
+        annualGeneration: string;
+        gridConnection?: string | null;
+    }>;
+    timeline: import("mongoose").Types.DocumentArray<{
+        year: string;
+        milestone: string;
+    }, import("mongoose").Types.Subdocument<import("bson").ObjectId, any, {
+        year: string;
+        milestone: string;
+    }> & {
+        year: string;
+        milestone: string;
+    }>;
 } & import("mongoose").DefaultTimestampProps, {}, {}, {}, import("mongoose").Document<unknown, {}, {
     user: string;
     description: string;
     url: string;
     public_id: string;
     title: string;
+    fullDescription: string;
     status: EStatus;
     location: string;
-    startedYear: string;
+    startYear: string;
     capacity: string;
     features: string[];
+    technicalSpecs: import("mongoose").Types.DocumentArray<{
+        Type: string;
+        headHeight: string;
+        turbineType: string;
+        annualGeneration: string;
+        gridConnection?: string | null;
+    }, import("mongoose").Types.Subdocument<import("bson").ObjectId, any, {
+        Type: string;
+        headHeight: string;
+        turbineType: string;
+        annualGeneration: string;
+        gridConnection?: string | null;
+    }> & {
+        Type: string;
+        headHeight: string;
+        turbineType: string;
+        annualGeneration: string;
+        gridConnection?: string | null;
+    }>;
+    timeline: import("mongoose").Types.DocumentArray<{
+        year: string;
+        milestone: string;
+    }, import("mongoose").Types.Subdocument<import("bson").ObjectId, any, {
+        year: string;
+        milestone: string;
+    }> & {
+        year: string;
+        milestone: string;
+    }>;
 } & import("mongoose").DefaultTimestampProps, {}, {
     timestamps: true;
 }> & {
@@ -30,11 +90,41 @@ declare const Project: import("mongoose").Model<{
     url: string;
     public_id: string;
     title: string;
+    fullDescription: string;
     status: EStatus;
     location: string;
-    startedYear: string;
+    startYear: string;
     capacity: string;
     features: string[];
+    technicalSpecs: import("mongoose").Types.DocumentArray<{
+        Type: string;
+        headHeight: string;
+        turbineType: string;
+        annualGeneration: string;
+        gridConnection?: string | null;
+    }, import("mongoose").Types.Subdocument<import("bson").ObjectId, any, {
+        Type: string;
+        headHeight: string;
+        turbineType: string;
+        annualGeneration: string;
+        gridConnection?: string | null;
+    }> & {
+        Type: string;
+        headHeight: string;
+        turbineType: string;
+        annualGeneration: string;
+        gridConnection?: string | null;
+    }>;
+    timeline: import("mongoose").Types.DocumentArray<{
+        year: string;
+        milestone: string;
+    }, import("mongoose").Types.Subdocument<import("bson").ObjectId, any, {
+        year: string;
+        milestone: string;
+    }> & {
+        year: string;
+        milestone: string;
+    }>;
 } & import("mongoose").DefaultTimestampProps & {
     _id: import("mongoose").Types.ObjectId;
 } & {
@@ -47,22 +137,82 @@ declare const Project: import("mongoose").Model<{
     url: string;
     public_id: string;
     title: string;
+    fullDescription: string;
     status: EStatus;
     location: string;
-    startedYear: string;
+    startYear: string;
     capacity: string;
     features: string[];
+    technicalSpecs: import("mongoose").Types.DocumentArray<{
+        Type: string;
+        headHeight: string;
+        turbineType: string;
+        annualGeneration: string;
+        gridConnection?: string | null;
+    }, import("mongoose").Types.Subdocument<import("bson").ObjectId, any, {
+        Type: string;
+        headHeight: string;
+        turbineType: string;
+        annualGeneration: string;
+        gridConnection?: string | null;
+    }> & {
+        Type: string;
+        headHeight: string;
+        turbineType: string;
+        annualGeneration: string;
+        gridConnection?: string | null;
+    }>;
+    timeline: import("mongoose").Types.DocumentArray<{
+        year: string;
+        milestone: string;
+    }, import("mongoose").Types.Subdocument<import("bson").ObjectId, any, {
+        year: string;
+        milestone: string;
+    }> & {
+        year: string;
+        milestone: string;
+    }>;
 } & import("mongoose").DefaultTimestampProps, import("mongoose").Document<unknown, {}, import("mongoose").FlatRecord<{
     user: string;
     description: string;
     url: string;
     public_id: string;
     title: string;
+    fullDescription: string;
     status: EStatus;
     location: string;
-    startedYear: string;
+    startYear: string;
     capacity: string;
     features: string[];
+    technicalSpecs: import("mongoose").Types.DocumentArray<{
+        Type: string;
+        headHeight: string;
+        turbineType: string;
+        annualGeneration: string;
+        gridConnection?: string | null;
+    }, import("mongoose").Types.Subdocument<import("bson").ObjectId, any, {
+        Type: string;
+        headHeight: string;
+        turbineType: string;
+        annualGeneration: string;
+        gridConnection?: string | null;
+    }> & {
+        Type: string;
+        headHeight: string;
+        turbineType: string;
+        annualGeneration: string;
+        gridConnection?: string | null;
+    }>;
+    timeline: import("mongoose").Types.DocumentArray<{
+        year: string;
+        milestone: string;
+    }, import("mongoose").Types.Subdocument<import("bson").ObjectId, any, {
+        year: string;
+        milestone: string;
+    }> & {
+        year: string;
+        milestone: string;
+    }>;
 } & import("mongoose").DefaultTimestampProps>, {}, import("mongoose").ResolveSchemaOptions<{
     timestamps: true;
 }>> & import("mongoose").FlatRecord<{
@@ -71,11 +221,41 @@ declare const Project: import("mongoose").Model<{
     url: string;
     public_id: string;
     title: string;
+    fullDescription: string;
     status: EStatus;
     location: string;
-    startedYear: string;
+    startYear: string;
     capacity: string;
     features: string[];
+    technicalSpecs: import("mongoose").Types.DocumentArray<{
+        Type: string;
+        headHeight: string;
+        turbineType: string;
+        annualGeneration: string;
+        gridConnection?: string | null;
+    }, import("mongoose").Types.Subdocument<import("bson").ObjectId, any, {
+        Type: string;
+        headHeight: string;
+        turbineType: string;
+        annualGeneration: string;
+        gridConnection?: string | null;
+    }> & {
+        Type: string;
+        headHeight: string;
+        turbineType: string;
+        annualGeneration: string;
+        gridConnection?: string | null;
+    }>;
+    timeline: import("mongoose").Types.DocumentArray<{
+        year: string;
+        milestone: string;
+    }, import("mongoose").Types.Subdocument<import("bson").ObjectId, any, {
+        year: string;
+        milestone: string;
+    }> & {
+        year: string;
+        milestone: string;
+    }>;
 } & import("mongoose").DefaultTimestampProps> & {
     _id: import("mongoose").Types.ObjectId;
 } & {

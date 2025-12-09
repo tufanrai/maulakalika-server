@@ -5,7 +5,7 @@ import fs from "fs";
 import Files from "../model/files.model";
 import asyncHandler from "../utils/asyncHandler.utils";
 import customError from "../utils/customerror.utils";
-import { IFiles } from "../interface/interfaces";
+import { IFiles, ITechSpecs, ITimeline } from "../interface/interfaces";
 
 // get all files
 export const getAllFiles = asyncHandler(async (req: Request, res: Response) => {
@@ -62,8 +62,11 @@ export const uploadFile = asyncHandler(async (req: Request, res: Response) => {
 
   var result = await cloudinary.uploader.upload(file.path, {
     folder: "moulakalika/file/projects", // optional
-    resource_type: "raw",
+    resource_type: "image",
   });
+
+  const techSpecs: ITechSpecs = fileDetails.technicalSpecs;
+  const timeline: ITimeline[] = fileDetails.timeline;
 
   // Save to MongoDB
   const uploadData = await Files.create({
@@ -74,9 +77,12 @@ export const uploadFile = asyncHandler(async (req: Request, res: Response) => {
     capacity: fileDetails.capacity,
     status: fileDetails.status,
     location: fileDetails.location,
-    startedYear: fileDetails.startYear,
+    startYear: fileDetails.startYear,
     features: fileDetails.features,
     user: req.user._id,
+    fullDescription: fileDetails.fullDescription,
+    technicalSpecs: techSpecs,
+    timeline,
   });
 
   // cleanup: remove local temp file
@@ -122,7 +128,7 @@ export const updateFile = asyncHandler(async (req: Request, res: Response) => {
   if (detials.description) existing.description = detials.description;
   if (detials.location) existing.location = detials.location;
   if (detials.status) existing.status = detials.status;
-  if (detials.startYear) existing.startedYear = detials.startYear;
+  if (detials.startYear) existing.startYear = detials.startYear;
   if (detials.features) existing.features = detials.features;
 
   const latest_modified = await existing.save({ validateModifiedOnly: true });

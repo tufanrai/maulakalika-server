@@ -28,6 +28,17 @@ export interface ILogin {
     email: string;
     password: string;
 }
+export interface ITechSpecs {
+    Type: string;
+    headHeight: string;
+    turbineType: string;
+    annualGeneration: string;
+    gridConnection: string;
+}
+export interface ITimeline {
+    year: string;
+    milestone: string;
+}
 export interface IFiles {
     title: string;
     description: string;
@@ -36,6 +47,9 @@ export interface IFiles {
     location: string;
     startYear: string;
     features: string[];
+    fullDescription: string;
+    technicalSpecs: ITechSpecs;
+    timeline: ITimeline[];
 }
 export interface INews {
     title: string;

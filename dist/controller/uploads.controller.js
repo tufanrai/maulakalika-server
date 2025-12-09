@@ -52,8 +52,10 @@ exports.uploadFile = (0, asyncHandler_utils_1.default)(async (req, res) => {
     }
     var result = await cloudinary_config_1.cloudinary.uploader.upload(file.path, {
         folder: "moulakalika/file/projects", // optional
-        resource_type: "raw",
+        resource_type: "image",
     });
+    const techSpecs = fileDetails.technicalSpecs;
+    const timeline = fileDetails.timeline;
     // Save to MongoDB
     const uploadData = await files_model_1.default.create({
         url: result.secure_url,
@@ -63,9 +65,12 @@ exports.uploadFile = (0, asyncHandler_utils_1.default)(async (req, res) => {
         capacity: fileDetails.capacity,
         status: fileDetails.status,
         location: fileDetails.location,
-        startedYear: fileDetails.startYear,
+        startYear: fileDetails.startYear,
         features: fileDetails.features,
         user: req.user._id,
+        fullDescription: fileDetails.fullDescription,
+        technicalSpecs: techSpecs,
+        timeline,
     });
     // cleanup: remove local temp file
     fs_1.default.unlinkSync(file.path);
@@ -109,7 +114,7 @@ exports.updateFile = (0, asyncHandler_utils_1.default)(async (req, res) => {
     if (detials.status)
         existing.status = detials.status;
     if (detials.startYear)
-        existing.startedYear = detials.startYear;
+        existing.startYear = detials.startYear;
     if (detials.features)
         existing.features = detials.features;
     const latest_modified = await existing.save({ validateModifiedOnly: true });
