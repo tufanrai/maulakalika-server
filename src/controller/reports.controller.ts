@@ -1,5 +1,5 @@
 // src/controllers/upload.controller.ts
-import { Request, Response } from "express";
+import Express, { Request, Response } from "express";
 import { cloudinary } from "../config/cloudinary.config";
 import fs from "fs";
 import Files from "../model/reports.model";
@@ -60,7 +60,7 @@ export const uploadFile = asyncHandler(async (req: Request, res: Response) => {
     throw new customError("please provide the required details", 400);
   }
 
-  console.log(file, fileDetails);
+  console.log(fileDetails);
   var result = await cloudinary.uploader.upload(file.path, {
     folder: "moulakalika/file/reports", // optional
     resource_type: "raw",

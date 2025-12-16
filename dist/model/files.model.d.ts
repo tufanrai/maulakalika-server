@@ -11,7 +11,7 @@ declare const Project: import("mongoose").Model<{
     location: string;
     startYear: string;
     capacity: string;
-    features: string[];
+    features: string;
     technicalSpecs: import("mongoose").Types.DocumentArray<{
         Type: string;
         headHeight: string;
@@ -31,16 +31,7 @@ declare const Project: import("mongoose").Model<{
         annualGeneration: string;
         gridConnection?: string | null;
     }>;
-    timeline: import("mongoose").Types.DocumentArray<{
-        year: string;
-        milestone: string;
-    }, import("mongoose").Types.Subdocument<import("bson").ObjectId, any, {
-        year: string;
-        milestone: string;
-    }> & {
-        year: string;
-        milestone: string;
-    }>;
+    timeline: string;
 } & import("mongoose").DefaultTimestampProps, {}, {}, {}, import("mongoose").Document<unknown, {}, {
     user: string;
     description: string;
@@ -52,7 +43,7 @@ declare const Project: import("mongoose").Model<{
     location: string;
     startYear: string;
     capacity: string;
-    features: string[];
+    features: string;
     technicalSpecs: import("mongoose").Types.DocumentArray<{
         Type: string;
         headHeight: string;
@@ -72,16 +63,7 @@ declare const Project: import("mongoose").Model<{
         annualGeneration: string;
         gridConnection?: string | null;
     }>;
-    timeline: import("mongoose").Types.DocumentArray<{
-        year: string;
-        milestone: string;
-    }, import("mongoose").Types.Subdocument<import("bson").ObjectId, any, {
-        year: string;
-        milestone: string;
-    }> & {
-        year: string;
-        milestone: string;
-    }>;
+    timeline: string;
 } & import("mongoose").DefaultTimestampProps, {}, {
     timestamps: true;
 }> & {
@@ -95,7 +77,7 @@ declare const Project: import("mongoose").Model<{
     location: string;
     startYear: string;
     capacity: string;
-    features: string[];
+    features: string;
     technicalSpecs: import("mongoose").Types.DocumentArray<{
         Type: string;
         headHeight: string;
@@ -115,16 +97,7 @@ declare const Project: import("mongoose").Model<{
         annualGeneration: string;
         gridConnection?: string | null;
     }>;
-    timeline: import("mongoose").Types.DocumentArray<{
-        year: string;
-        milestone: string;
-    }, import("mongoose").Types.Subdocument<import("bson").ObjectId, any, {
-        year: string;
-        milestone: string;
-    }> & {
-        year: string;
-        milestone: string;
-    }>;
+    timeline: string;
 } & import("mongoose").DefaultTimestampProps & {
     _id: import("mongoose").Types.ObjectId;
 } & {
@@ -142,7 +115,7 @@ declare const Project: import("mongoose").Model<{
     location: string;
     startYear: string;
     capacity: string;
-    features: string[];
+    features: string;
     technicalSpecs: import("mongoose").Types.DocumentArray<{
         Type: string;
         headHeight: string;
@@ -162,16 +135,7 @@ declare const Project: import("mongoose").Model<{
         annualGeneration: string;
         gridConnection?: string | null;
     }>;
-    timeline: import("mongoose").Types.DocumentArray<{
-        year: string;
-        milestone: string;
-    }, import("mongoose").Types.Subdocument<import("bson").ObjectId, any, {
-        year: string;
-        milestone: string;
-    }> & {
-        year: string;
-        milestone: string;
-    }>;
+    timeline: string;
 } & import("mongoose").DefaultTimestampProps, import("mongoose").Document<unknown, {}, import("mongoose").FlatRecord<{
     user: string;
     description: string;
@@ -183,7 +147,7 @@ declare const Project: import("mongoose").Model<{
     location: string;
     startYear: string;
     capacity: string;
-    features: string[];
+    features: string;
     technicalSpecs: import("mongoose").Types.DocumentArray<{
         Type: string;
         headHeight: string;
@@ -203,16 +167,7 @@ declare const Project: import("mongoose").Model<{
         annualGeneration: string;
         gridConnection?: string | null;
     }>;
-    timeline: import("mongoose").Types.DocumentArray<{
-        year: string;
-        milestone: string;
-    }, import("mongoose").Types.Subdocument<import("bson").ObjectId, any, {
-        year: string;
-        milestone: string;
-    }> & {
-        year: string;
-        milestone: string;
-    }>;
+    timeline: string;
 } & import("mongoose").DefaultTimestampProps>, {}, import("mongoose").ResolveSchemaOptions<{
     timestamps: true;
 }>> & import("mongoose").FlatRecord<{
@@ -226,7 +181,7 @@ declare const Project: import("mongoose").Model<{
     location: string;
     startYear: string;
     capacity: string;
-    features: string[];
+    features: string;
     technicalSpecs: import("mongoose").Types.DocumentArray<{
         Type: string;
         headHeight: string;
@@ -246,16 +201,7 @@ declare const Project: import("mongoose").Model<{
         annualGeneration: string;
         gridConnection?: string | null;
     }>;
-    timeline: import("mongoose").Types.DocumentArray<{
-        year: string;
-        milestone: string;
-    }, import("mongoose").Types.Subdocument<import("bson").ObjectId, any, {
-        year: string;
-        milestone: string;
-    }> & {
-        year: string;
-        milestone: string;
-    }>;
+    timeline: string;
 } & import("mongoose").DefaultTimestampProps> & {
     _id: import("mongoose").Types.ObjectId;
 } & {

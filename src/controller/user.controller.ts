@@ -47,7 +47,7 @@ export const getUserData = asyncHandler(async (req: Request, res: Response) => {
 // update users data
 export const updateAdmin = asyncHandler(async (req: Request, res: Response) => {
   const id = req.params.id;
-  const data: IRegisterValue = req.body;
+  const data = req.body;
 
   const admin = await User.findById(id);
 

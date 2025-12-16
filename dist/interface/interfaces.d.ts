@@ -22,7 +22,6 @@ export interface IRegisterValue {
     contact: number;
     password: string;
     role: Roles;
-    about: string;
 }
 export interface ILogin {
     email: string;
@@ -46,10 +45,10 @@ export interface IFiles {
     status: EStatus;
     location: string;
     startYear: string;
-    features: string[];
+    features: string;
     fullDescription: string;
-    technicalSpecs: ITechSpecs;
-    timeline: ITimeline[];
+    technicalSpecs: string;
+    timeline: string;
 }
 export interface INews {
     title: string;
@@ -63,9 +62,11 @@ export interface IReports {
     type: EReports;
     date: string;
     pages: string;
+    file?: string;
 }
 export interface IImage {
     category: string;
     alt: string;
+    image: string;
 }
 //# sourceMappingURL=interfaces.d.ts.map

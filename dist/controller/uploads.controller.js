@@ -54,8 +54,6 @@ exports.uploadFile = (0, asyncHandler_utils_1.default)(async (req, res) => {
         folder: "moulakalika/file/projects", // optional
         resource_type: "image",
     });
-    const techSpecs = fileDetails.technicalSpecs;
-    const timeline = fileDetails.timeline;
     // Save to MongoDB
     const uploadData = await files_model_1.default.create({
         url: result.secure_url,
@@ -69,8 +67,8 @@ exports.uploadFile = (0, asyncHandler_utils_1.default)(async (req, res) => {
         features: fileDetails.features,
         user: req.user._id,
         fullDescription: fileDetails.fullDescription,
-        technicalSpecs: techSpecs,
-        timeline,
+        technicalSpecs: fileDetails.technicalSpecs,
+        timeline: fileDetails.timeline,
     });
     // cleanup: remove local temp file
     fs_1.default.unlinkSync(file.path);
@@ -86,23 +84,48 @@ exports.updateFile = (0, asyncHandler_utils_1.default)(async (req, res) => {
     const { id } = req.params; // MongoDB document ID
     const newFile = req.file;
     const detials = req.body;
-    const existing = await files_model_1.default.findById(id);
+    const existing = await files_model_1.default.findOne({ _id: id });
     if (!existing) {
         throw new customerror_utils_1.default("File not found", 404);
     }
-    if (!newFile) {
-        throw new customerror_utils_1.default("No any new files provided", 404);
+    if (newFile) {
+        // Delete old file from Cloudinary
+        await cloudinary_config_1.cloudinary.uploader.destroy(existing.public_id);
+        // Upload new file
+        const result = await cloudinary_config_1.cloudinary.uploader.upload(newFile.path, {
+            folder: "maulakalika/file/projects",
+            resource_type: "raw",
+        });
+        // Update database record
+        existing.url = result.secure_url;
+        existing.public_id = result.public_id;
+        if (detials.title)
+            existing.title = detials.title;
+        if (detials.capacity)
+            existing.capacity = detials.capacity;
+        if (detials.description)
+            existing.description = detials.description;
+        if (detials.location)
+            existing.location = detials.location;
+        if (detials.status)
+            existing.status = detials.status;
+        if (detials.startYear)
+            existing.startYear = detials.startYear;
+        if (detials.features)
+            existing.features = detials.features;
+        if (detials.timeline)
+            existing.timeline = detials.timeline;
+        const latest_modified = await existing.save({ validateModifiedOnly: true });
+        fs_1.default.unlinkSync(newFile.path);
+        res.status(200).json({
+            message: "file successfully updated",
+            latest_modified,
+            status: "Success",
+            success: true,
+        });
+        return;
     }
-    // Delete old file from Cloudinary
-    await cloudinary_config_1.cloudinary.uploader.destroy(existing.public_id);
-    // Upload new file
-    const result = await cloudinary_config_1.cloudinary.uploader.upload(newFile.path, {
-        folder: "maulakalika/file/projects",
-        resource_type: "raw",
-    });
     // Update database record
-    existing.url = result.secure_url;
-    existing.public_id = result.public_id;
     if (detials.title)
         existing.title = detials.title;
     if (detials.capacity)
@@ -117,8 +140,9 @@ exports.updateFile = (0, asyncHandler_utils_1.default)(async (req, res) => {
         existing.startYear = detials.startYear;
     if (detials.features)
         existing.features = detials.features;
+    if (detials.timeline)
+        existing.timeline = detials.timeline;
     const latest_modified = await existing.save({ validateModifiedOnly: true });
-    fs_1.default.unlinkSync(newFile.path);
     res.status(200).json({
         message: "file successfully updated",
         latest_modified,

@@ -16,5 +16,5 @@ export enum EStatus {
 export enum EReports {
   annual = "Annual",
   semi_annual = "Semi-annual",
-  financial = "Financial",
+  financial = "AGM",
 }

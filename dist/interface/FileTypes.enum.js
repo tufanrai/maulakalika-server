@@ -20,6 +20,6 @@ var EReports;
 (function (EReports) {
     EReports["annual"] = "Annual";
     EReports["semi_annual"] = "Semi-annual";
-    EReports["financial"] = "Financial";
+    EReports["financial"] = "AGM";
 })(EReports || (exports.EReports = EReports = {}));
 //# sourceMappingURL=FileTypes.enum.js.map

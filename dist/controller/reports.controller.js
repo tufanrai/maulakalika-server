@@ -50,7 +50,7 @@ exports.uploadFile = (0, asyncHandler_utils_1.default)(async (req, res) => {
     if (!fileDetails) {
         throw new customerror_utils_1.default("please provide the required details", 400);
     }
-    console.log(file, fileDetails);
+    console.log(fileDetails);
     var result = await cloudinary_config_1.cloudinary.uploader.upload(file.path, {
         folder: "moulakalika/file/reports", // optional
         resource_type: "raw",

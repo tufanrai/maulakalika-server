@@ -28,7 +28,6 @@ export interface IRegisterValue {
   contact: number;
   password: string;
   role: Roles;
-  about: string;
 }
 
 // login admin
@@ -60,10 +59,10 @@ export interface IFiles {
   status: EStatus;
   location: string;
   startYear: string;
-  features: string[];
+  features: string;
   fullDescription: string;
-  technicalSpecs: ITechSpecs;
-  timeline: ITimeline[];
+  technicalSpecs: string;
+  timeline: string;
 }
 
 // news interface
@@ -81,10 +80,12 @@ export interface IReports {
   type: EReports;
   date: string;
   pages: string;
+  file?: string;
 }
 
 // Image interface
 export interface IImage {
   category: string;
   alt: string;
+  image: string;
 }

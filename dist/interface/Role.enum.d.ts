@@ -1,5 +1,5 @@
 export declare enum Roles {
-    superAdmin = "Super Admin",
+    superAdmin = "Super admin",
     admin = "Admin",
     user = "User"
 }

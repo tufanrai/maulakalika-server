@@ -42,15 +42,15 @@ exports.getSpecificImage = (0, asyncHandler_utils_1.default)(async (req, res) =>
 });
 // upload file
 exports.uploadImage = (0, asyncHandler_utils_1.default)(async (req, res) => {
-    const file = req.file;
+    const image = req.file;
     const files_detail = req.body;
-    if (!file) {
+    if (!image) {
         throw new customerror_utils_1.default("Please provide the file", 400);
     }
     if (!files_detail) {
         throw new customerror_utils_1.default("please provide the details of the image", 400);
     }
-    const result = await cloudinary_config_1.cloudinary.uploader.upload(file.path, {
+    const result = await cloudinary_config_1.cloudinary.uploader.upload(image.path, {
         folder: "moulakalika/gallery/images", // optional
         resource_type: "image",
     });
@@ -69,7 +69,7 @@ exports.uploadImage = (0, asyncHandler_utils_1.default)(async (req, res) => {
         throw new customerror_utils_1.default("something went worng please try again later", 500);
     }
     // cleanup: remove local temp file
-    fs_1.default.unlinkSync(file.path);
+    fs_1.default.unlinkSync(image.path);
     res.status(200).json({
         message: "file uploaded successfully",
         uploadData,

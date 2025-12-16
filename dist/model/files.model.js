@@ -42,7 +42,8 @@ const projectSchema = new mongoose_1.Schema({
         required: [true, "please define the capacity of the project"],
     },
     features: {
-        type: [String],
+        type: String,
+        required: [true, "your project must have at least one feature"],
     },
     user: {
         type: String,
@@ -79,18 +80,7 @@ const projectSchema = new mongoose_1.Schema({
         required: [true, "please pass the object"],
     },
     timeline: {
-        type: [
-            {
-                year: {
-                    type: String,
-                    required: [true, "please define the achievement for the year"],
-                },
-                milestone: {
-                    type: String,
-                    required: [true, "please define the achievement for the year"],
-                },
-            },
-        ],
+        type: String,
         required: [true, "please define the journey of the development process"],
     },
 }, { timestamps: true });

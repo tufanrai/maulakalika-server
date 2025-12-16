@@ -12,19 +12,18 @@ import { Roles } from "../interface/Role.enum";
 
 const uploadRouter = Router();
 
-uploadRouter.get("/", getAllFiles);
-uploadRouter.get("/:id", getSpecificFile);
-
 uploadRouter.post(
   "/upload",
   authAdmin([Roles.admin, Roles.superAdmin]),
   upload.single("file"),
   uploadFile
 );
+uploadRouter.get("/", getAllFiles);
+uploadRouter.get("/:id", getSpecificFile);
 
 uploadRouter.put(
   "/upload/:id",
-  authAdmin([Roles.admin, Roles.superAdmin]),
+  // authAdmin([Roles.admin, Roles.superAdmin]),
   upload.single("file"),
   updateFile
 );

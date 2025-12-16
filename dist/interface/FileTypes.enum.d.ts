@@ -12,6 +12,6 @@ export declare enum EStatus {
 export declare enum EReports {
     annual = "Annual",
     semi_annual = "Semi-annual",
-    financial = "Financial"
+    financial = "AGM"
 }
 //# sourceMappingURL=FileTypes.enum.d.ts.map

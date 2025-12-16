@@ -20,7 +20,7 @@ dbConfig(DB_URI);
 
 // inbuild middlewares
 app.use(cors());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded());
 app.use(express.json());
 
 // routers

@@ -10,7 +10,7 @@ import { Roles } from "../interface/Role.enum";
 
 const userRouter = Router();
 
-userRouter.get("/", authAdmin([Roles.superAdmin]), getAllUsersData);
+userRouter.get("/", authAdmin([Roles.admin]), getAllUsersData);
 userRouter.get("/:id", authAdmin([Roles.admin, Roles.superAdmin]), getUserData);
 userRouter.put(
   "/update/:id",

@@ -22,7 +22,7 @@ const app = (0, express_1.default)();
 (0, database_config_1.default)(DB_URI);
 // inbuild middlewares
 app.use((0, cors_1.default)());
-app.use(express_1.default.urlencoded({ extended: true }));
+app.use(express_1.default.urlencoded());
 app.use(express_1.default.json());
 // routers
 app.use("/api/auth", auth_router_1.default);

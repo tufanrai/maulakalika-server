@@ -51,10 +51,10 @@ export const getSpecificImage = asyncHandler(
 
 // upload file
 export const uploadImage = asyncHandler(async (req: Request, res: Response) => {
-  const file = req.file;
+  const image = req.file;
   const files_detail: IImage = req.body;
 
-  if (!file) {
+  if (!image) {
     throw new customError("Please provide the file", 400);
   }
 
@@ -62,7 +62,7 @@ export const uploadImage = asyncHandler(async (req: Request, res: Response) => {
     throw new customError("please provide the details of the image", 400);
   }
 
-  const result = await cloudinary.uploader.upload(file.path, {
+  const result = await cloudinary.uploader.upload(image.path, {
     folder: "moulakalika/gallery/images", // optional
     resource_type: "image",
   });
@@ -85,7 +85,7 @@ export const uploadImage = asyncHandler(async (req: Request, res: Response) => {
   }
 
   // cleanup: remove local temp file
-  fs.unlinkSync(file.path);
+  fs.unlinkSync(image.path);
 
   res.status(200).json({
     message: "file uploaded successfully",
