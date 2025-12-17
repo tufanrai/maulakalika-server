@@ -86,23 +86,32 @@ exports.updateImage = (0, asyncHandler_utils_1.default)(async (req, res) => {
     if (!existing) {
         throw new customerror_utils_1.default("File not found", 404);
     }
-    if (!newFile) {
-        throw new customerror_utils_1.default("No any new files provided", 404);
+    if (newFile) {
+        // Delete old file from Cloudinary
+        await cloudinary_config_1.cloudinary.uploader.destroy(existing.public_id);
+        // Upload new file
+        const result = await cloudinary_config_1.cloudinary.uploader.upload(newFile.path, {
+            folder: "maulakalika/gallery/images",
+            resource_type: "image",
+        });
+        // Update database record
+        existing.url = result.secure_url;
+        existing.public_id = result.public_id;
+        files_detail.alt ? (existing.alt = files_detail.alt) : "";
+        files_detail.category ? (existing.category = files_detail.category) : "";
+        const latest_modified = await existing.save({ validateModifiedOnly: true });
+        fs_1.default.unlinkSync(newFile.path);
+        res.status(200).json({
+            message: "file successfully updated",
+            latest_modified,
+            status: "Success",
+            success: true,
+        });
     }
-    // Delete old file from Cloudinary
-    await cloudinary_config_1.cloudinary.uploader.destroy(existing.public_id);
-    // Upload new file
-    const result = await cloudinary_config_1.cloudinary.uploader.upload(newFile.path, {
-        folder: "maulakalika/gallery/images",
-        resource_type: "image",
-    });
-    // Update database record
-    existing.url = result.secure_url;
-    existing.public_id = result.public_id;
+    // Update database record without new file
     files_detail.alt ? (existing.alt = files_detail.alt) : "";
     files_detail.category ? (existing.category = files_detail.category) : "";
     const latest_modified = await existing.save({ validateModifiedOnly: true });
-    fs_1.default.unlinkSync(newFile.path);
     res.status(200).json({
         message: "file successfully updated",
         latest_modified,

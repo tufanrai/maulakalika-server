@@ -84,23 +84,36 @@ exports.updateTheNews = (0, asyncHandler_utils_1.default)(async (req, res) => {
     if (!news) {
         throw new customerror_utils_1.default("news not found", 404);
     }
-    if (!newFile) {
-        throw new customerror_utils_1.default("No any new files provided", 404);
+    if (newFile) {
+        // Delete old file from Cloudinary
+        await cloudinary_config_1.cloudinary.uploader.destroy(news.public_id);
+        // Upload new file
+        const result = await cloudinary_config_1.cloudinary.uploader.upload(newFile.path, {
+            folder: "maulakalika/gallery/news",
+            resource_type: "raw",
+        });
+        data.title ? (news.title = data.title) : "";
+        data.category ? (news.category = data.category) : "";
+        data.date ? (news.date = data.date) : "";
+        data.excerpt ? (news.excerpt = data.excerpt) : "";
+        result.secure_url ? (news.url = result.secure_url) : "";
+        result.public_id ? (news.public_id = result.public_id) : "";
+        result.description ? (news.description = result.description) : "";
+        const latestUpdate = news.save({ validateModifiedOnly: true });
+        if (!latestUpdate) {
+            throw new customerror_utils_1.default("something went wrong please try again", 500);
+        }
+        res.status(200).json({
+            message: "news successfully updated",
+            latestUpdate,
+            status: "success",
+            success: true,
+        });
     }
-    // Delete old file from Cloudinary
-    await cloudinary_config_1.cloudinary.uploader.destroy(news.public_id);
-    // Upload new file
-    const result = await cloudinary_config_1.cloudinary.uploader.upload(newFile.path, {
-        folder: "maulakalika/gallery/news",
-        resource_type: "raw",
-    });
     data.title ? (news.title = data.title) : "";
     data.category ? (news.category = data.category) : "";
     data.date ? (news.date = data.date) : "";
     data.excerpt ? (news.excerpt = data.excerpt) : "";
-    result.secure_url ? (news.url = result.secure_url) : "";
-    result.public_id ? (news.public_id = result.public_id) : "";
-    result.description ? (news.description = result.description) : "";
     const latestUpdate = news.save({ validateModifiedOnly: true });
     if (!latestUpdate) {
         throw new customerror_utils_1.default("something went wrong please try again", 500);
