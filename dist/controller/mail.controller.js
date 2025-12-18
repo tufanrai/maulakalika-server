@@ -23,5 +23,13 @@ exports.sendMail = (0, asyncHandler_utils_1.default)(async (req, res) => {
         <p>${message.message}</p>
     </div>`,
     });
+    if (!resp) {
+        throw new customerror_utils_1.default("Something went wrong please try again later", 400);
+    }
+    res.status(200).json({
+        message: "Message sent successfully",
+        status: "success",
+        success: true,
+    });
 });
 //# sourceMappingURL=mail.controller.js.map

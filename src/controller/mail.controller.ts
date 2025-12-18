@@ -22,4 +22,14 @@ export const sendMail = asyncHandler(async (req: Request, res: Response) => {
         <p>${message.message}</p>
     </div>`,
   });
+
+  if (!resp) {
+    throw new customError("Something went wrong please try again later", 400);
+  }
+
+  res.status(200).json({
+    message: "Message sent successfully",
+    status: "success",
+    success: true,
+  });
 });
