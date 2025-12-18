@@ -69,4 +69,10 @@ export interface IImage {
     alt: string;
     image: string;
 }
+export interface IMail {
+    name: string;
+    email: string;
+    subject: string;
+    message: string;
+}
 //# sourceMappingURL=interfaces.d.ts.map

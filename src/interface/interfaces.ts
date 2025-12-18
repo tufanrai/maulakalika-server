@@ -89,3 +89,12 @@ export interface IImage {
   alt: string;
   image: string;
 }
+
+
+// Mail Interface
+export interface IMail {
+  name: string,
+  email: string,
+  subject: string,
+  message: string
+}

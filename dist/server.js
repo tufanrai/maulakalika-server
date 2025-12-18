@@ -14,6 +14,7 @@ const upload_router_1 = __importDefault(require("./routers/upload.router"));
 const gallery_router_1 = __importDefault(require("./routers/gallery.router"));
 const news_router_1 = __importDefault(require("./routers/news.router"));
 const reports_router_1 = __importDefault(require("./routers/reports.router"));
+const mail_router_1 = __importDefault(require("./routers/mail.router"));
 // environment variables
 const PORT = process.env.PORT ?? "";
 const DB_URI = process.env.DB_URI ?? "";
@@ -31,6 +32,7 @@ app.use("/files", upload_router_1.default);
 app.use("/gallery", gallery_router_1.default);
 app.use("/news", news_router_1.default);
 app.use("/reports", reports_router_1.default);
+app.use("/mail", mail_router_1.default);
 // custom error response
 app.use(error_middleware_1.errorMiddleware);
 app.listen(PORT, () => console.log(`server started at port: ${PORT} 🚀`));

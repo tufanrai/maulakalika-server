@@ -9,6 +9,7 @@ import uploadRouter from "./routers/upload.router";
 import galleryRouter from "./routers/gallery.router";
 import newsRouter from "./routers/news.router";
 import reportsRouter from "./routers/reports.router";
+import mailRouter from "./routers/mail.router";
 // environment variables
 const PORT = process.env.PORT ?? "";
 const DB_URI = process.env.DB_URI ?? "";
@@ -30,6 +31,7 @@ app.use("/files", uploadRouter);
 app.use("/gallery", galleryRouter);
 app.use("/news", newsRouter);
 app.use("/reports", reportsRouter);
+app.use("/mail", mailRouter);
 
 // custom error response
 app.use(errorMiddleware);
